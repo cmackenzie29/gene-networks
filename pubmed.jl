@@ -70,15 +70,15 @@ function analyze_set(disease_name)
 		n_articles_total = 0
 
 		for year in 2000:2025
-			println("Analyzing abstracts from $(year)...")
+			println("Analyzing $(disease_name) abstracts from $(year)...")
 			hits, n_articles = analyze("pubmed_$(disease_name)_$(year).txt", genes, genenames)
 			hits_total += hits
 			n_articles_total += n_articles
 		end
 
 		output = ""
-		for i in collect(1:length(genes))[hits .> 0]
-			output = output * genes[i] * "\t" * "$(hits[i])" * "\n"
+		for i in collect(1:length(genes))[hits_total .> 0]
+			output = output * genes[i] * "\t" * "$(hits_total[i])" * "\n"
 		end
 		
 		file = open("data/results/pubmed_$(disease_name)_results.txt", "w")
