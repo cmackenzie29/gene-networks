@@ -38,8 +38,6 @@ plt.xlabel("log(Degree)", fontsize=15)
 plt.ylabel("log(# of Nodes)", fontsize=15)
 plt.show()
 
-
-# Best: k = 0.15
 layout = nx.spring_layout(g, k=0.15, seed=1)
 centrality = nx.betweenness_centrality(g)
 max_centrality = max(list(centrality.values()))

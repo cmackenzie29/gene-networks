@@ -100,7 +100,7 @@ bar_width = 0.35
 index = np.arange(n_bars)
 plt.bar(index, one_dropped_genes_excluded, bar_width, label='Top gene removed')
 plt.bar(index + bar_width, twenty_dropped_genes_excluded, bar_width, label='Top 20 genes removed')
-plt.ylabel('# of additional genes removed')
+plt.ylabel('Average path length')
 plt.xticks(index + bar_width / 2, disorder, rotation=90, fontsize=8)
 plt.legend()
 plt.tight_layout()
@@ -113,7 +113,7 @@ index = np.arange(n_bars) * 1.5
 plt.bar(index, [x[0] for x in none_dropped_path_length_genes], bar_width, label='Complete network')
 plt.bar(index + bar_width, [x[0] for x in one_dropped_path_length_genes], bar_width, label='Top gene removed')
 plt.bar(index + 2*bar_width, [x[0] for x in twenty_dropped_path_length_genes], bar_width, label='Top 20 genes removed')
-plt.ylabel('# of additional genes removed')
+plt.ylabel('Average path length')
 plt.xticks(index + bar_width, disorder, rotation=90, fontsize=8)
 plt.legend()
 plt.tight_layout()
@@ -126,7 +126,7 @@ index = np.arange(n_bars)
 plt.bar(index, [x[0] for x in one_dropped_path_length_all], bar_width, label='Top gene removed')
 plt.bar(index + bar_width, [x[0] for x in twenty_dropped_path_length_all], bar_width, label='Top 20 genes removed')
 plt.axhline(y=3.84397798, color='black', linestyle='--', linewidth=1.0)
-plt.ylabel('# of additional genes removed')
+plt.ylabel('Average path length')
 plt.xticks(index + bar_width / 2, disorder, rotation=90, fontsize=8)
 plt.legend()
 plt.tight_layout()
@@ -159,10 +159,15 @@ plt.show()
 # with open("/data/gene_perturbation_cache/twenty_dropped_path_length_genes.sav", "wb") as f:
 # 	pickle.dump(twenty_dropped_path_length_genes, f)
 
-
-
-
-
+# Quantify the difference
+results = np.zeros(0)
+for i in range(len(one_dropped_path_length_genes)):
+	results = np.append(results, one_dropped_path_length_genes[i][0] - none_dropped_path_length_genes[i][0])
+# 0.00015±0.00508, not different from 0 (P > 0.05)
+results = np.zeros(0)
+for i in range(len(one_dropped_path_length_genes)):
+	results = np.append(results, twenty_dropped_path_length_genes[i][0] - none_dropped_path_length_genes[i][0])
+# 0.02137±0.053046, different from 0 (P < 0.05)
 
 
 
